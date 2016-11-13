@@ -1,19 +1,14 @@
-"use strict";
+const { start } = require('semicoroutine');
+const mongoose = require('mongoose');
 
-let co = require ('co');
+const connString = require('./conf/connection-string');
 
+console.log(connString);
+mongoose.connect(connString.mongo);
 
-let { scrapeAndSaveEvents } =  require('./services/city_clerk_importer');
+let { getSearchResults } =  require('./services/city_clerk_importer');
 
-co( function* () {
-
-  yield scrapeAndSaveEvents('resources/zoning_extract/zone_data.json')
-
-
-
-
+start( function* () {
+  yield getSearchResults();
 });
-
-
-
 
